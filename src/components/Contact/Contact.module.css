@@ -32,6 +32,13 @@
 
 }
 
+.nameId {
+    width: 200px; 
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
 .button {
     margin-left: auto;
     width: 72px;
@@ -51,5 +58,15 @@
 @media screen and (max-width: 767px) {
     .listItem {
         width: 300px;
+    }
+
+    .nameId {
+        width: 150px; 
+        font-size: 16px;
+        
+    }
+
+    .numberId {
+        font-size: 16px;
     }
 }

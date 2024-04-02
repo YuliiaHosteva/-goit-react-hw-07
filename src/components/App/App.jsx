@@ -2,52 +2,30 @@ import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
 import css from './App.module.css';
-
-// const getCurrentContacts = () => {
-//   const savedContacts = localStorage.getItem("current-contacts");
-//   return savedContacts !== null ? JSON.parse(savedContacts) : initialContacts;
-// }; 
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from '../../redux/contactsOps';
+import { selectError, selectLoading } from '../../redux/contactsSlice';
+import Loader from '../Loader/Loader';
 
 const App = () => {
-  // const [inputValue, setInputValue] = useState("");
-  // const [contactList, setContactList] = useState(getCurrentContacts);
+    const dispatch = useDispatch();
+    const loading = useSelector(selectLoading);
+    const error = useSelector(selectError);
   
-  // useEffect(() => {
-  //   localStorage.setItem('current-contacts', JSON.stringify(contactList));
-  // }, [contactList]);
-
-  // const updateSearchFilter = (evt) => {
-  //   setInputValue(evt.target.value);
-  // };
-
-  // const filteredContacts = contactList.filter((contact) =>
-  //   contact.name.toLocaleLowerCase().includes(inputValue.toLowerCase())
-  // );
-
-  // const addContact = (values, actions) => {
-  //   const newContact = {
-  //     id: nanoid(),
-  //     name: values.name,
-  //     number: values.number,
-  //   };
-  //   setContactList((prevContacts) => {
-  //     return [...prevContacts, newContact];
-  //   });
-  //   actions.resetForm();
-  // };
-
-  // const handleDeleteContact = (contactId) => {
-  //   setContactList((prevContacts) =>
-  //     prevContacts.filter((contact) => contact.id !== contactId)
-  //   );
-  // };
-  
+    useEffect(() => {
+      dispatch(fetchContacts());
+    }, [dispatch]);
 
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
+      <div>
       <ContactForm />
       <SearchBox />
+      </div>
+      {loading && !error && <Loader />}
+      {error && <b>{error}</b>}
       <ContactList />
     </div>
   );
